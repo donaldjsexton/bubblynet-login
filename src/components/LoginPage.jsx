@@ -1,11 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import logo from "../assets/BNLOGOWHITE.webp"; // or "../logo.svg" etc.
+import logo from "../assets/BNLOGOWHITE.webp"; // BubblyNet wordmark
 
 function LoginPage({ onSubmit, authError, isSubmitting }) {
   const [values, setValues] = useState({ username: "", password: "" });
   const [fieldErrors, setFieldErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const usernameRef = useRef(null);
+  const palette = [
+    { name: "Ember Orange", value: "#ff3e00" },
+    { name: "Pulse Magenta", value: "#fe1e7d" },
+    { name: "Midnight Ink", value: "#000000" },
+    { name: "Charcoal Mist", value: "#191d21" },
+  ];
 
   useEffect(() => {
     if (usernameRef.current) {
@@ -57,10 +63,19 @@ function LoginPage({ onSubmit, authError, isSubmitting }) {
     <div className="auth-page">
       <main className="auth-card" aria-labelledby="auth-title">
         <header className="auth-header">
-          {logo && <img src={logo} alt="Company logo" className="auth-logo" />}
+          {logo && (
+            <img
+              src={logo}
+              alt="BubblyNet logo"
+              className="auth-logo"
+              loading="lazy"
+            />
+          )}
           <div>
-            <h1 id="auth-title">Cloud Sign-In</h1>
-            <p className="auth-subtitle">Sign in to access your workspace.</p>
+            <h1 id="auth-title">BubblyNet Cloud Access</h1>
+            <p className="auth-subtitle">
+              Sign in to access your workspace and devices.
+            </p>
           </div>
         </header>
 
@@ -130,12 +145,40 @@ function LoginPage({ onSubmit, authError, isSubmitting }) {
           </button>
         </form>
 
+        <section className="palette">
+          <div className="palette-head">
+            <p className="palette-label">Brand palette</p>
+            <p className="palette-helper">
+              Use these tones when embedding this login in other apps.
+            </p>
+          </div>
+          <div className="swatch-grid" aria-label="BubblyNet color palette">
+            {palette.map((swatch) => (
+              <div key={swatch.value} className="swatch">
+                <span
+                  className="swatch-chip"
+                  style={{ backgroundColor: swatch.value }}
+                  aria-hidden="true"
+                />
+                <div className="swatch-meta">
+                  <span className="swatch-name">{swatch.name}</span>
+                  <span className="swatch-value">{swatch.value}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <footer className="auth-footer">
           <button type="button" className="support-link">
             Need help? Contact support.
           </button>
           <p className="legal-text">
             By signing in, you agree to the Terms and Privacy Policy.
+          </p>
+          <p className="legal-text">
+            Test login: <strong>demo@bubblynet.com</strong> /{" "}
+            <strong>Demo123!</strong>
           </p>
         </footer>
       </main>

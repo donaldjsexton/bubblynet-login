@@ -1,0 +1,9 @@
+{
+  "users": [
+    {
+      "username": "demo@bubblynet.com",
+      "password": "Demo123!",
+      "displayName": "Demo User"
+    }
+  ]
+}

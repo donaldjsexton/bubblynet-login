@@ -1,6 +1,6 @@
 # BubblyNet Login
 
-This project delivers a focused, reusable login experience using React. The objective was not to create a feature-rich product, but to build a clear, portable authentication entry point that can be integrated into future BubblyNet applications without modification.
+This project delivers a focused, reusable login experience using React. The objective was not to create a feature-rich product, but to build a clear, portable authentication entry point that can be integrated into future BubblyNet applications without modification. The static bundle also highlights the current BubblyNet wordmark plus a four-color brand palette for easy reuse.
 
 ---
 
@@ -27,6 +27,7 @@ The application has three clear responsibilities:
 | `LoginPage` | Collect user credentials and display validation |
 | `authService.js` | Perform authentication (currently mocked) |
 | `App.js` | Render authenticated vs. unauthenticated states |
+| `/public/api/users.json` | Mock REST datasource for username lookup |
 
 This separation allows authentication to change without UI refactoring.
 
@@ -44,7 +45,11 @@ This separation allows authentication to change without UI refactoring.
 - Removes Node from production runtime  
 - Produces a deterministic output  
 
-**No routing or external libraries**
+**REST-style datasource backing auth**
+- `authService.js` calls `/api/users.json` (bundled with the static assets) to resolve the demo user  
+- If the REST call fails or you are offline, a small in-memory fallback keeps the login usable  
+
+**No routing or extra dependencies**
 - Scope is intentionally limited to login behavior  
 - Reduces onboarding time for reviewers  
 - Keeps handoff clean
@@ -96,6 +101,27 @@ Then visit:
 ```
 http://localhost:8080
 ```
+
+The static bundle lives in `/build` and can be dropped onto any CDN or static host (Netlify, Vercel, S3+CloudFront, Firebase Hosting, etc.).
+
+### Deploying to Vercel
+
+- If not installed: `npm i -g vercel`
+- From the project root: `vercel --prod` (auto-detects CRA build and outputs to `build/`)
+- A project link is already created for this repo; the current live deployment is:  
+  `https://bubbly-login-j1oeqxy7y-ninjaexilemkiiis-projects.vercel.app`
+- Vercel stores local metadata in `.vercel/` (already ignored).
+
+## Brand & UX Quick Reference
+
+- Logo: `src/assets/BNLOGOWHITE.webp` (displayed in the header)  
+- Palette swatches (surfaced on the page):
+  - Ember Orange `#ff3e00`
+  - Pulse Magenta `#fe1e7d`
+  - Midnight Ink `#000000`
+  - Charcoal Mist `#191d21`
+- Test credentials (also shown on the page): `demo@bubblynet.com` / `Demo123!`
+- REST mock: `/api/users.json` is fetched at runtime; swap to a real endpoint without touching the UI.
 
 ---
 
